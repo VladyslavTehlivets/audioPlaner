@@ -17,6 +17,11 @@
       <h1 class="title">Days</h1>
     </ion-header-bar>
     <ion-content>
+      <br><br>
+      <div margin-top margin-bottom>
+          <img src="img/logo.png" style="width:100%;">
+      </div>
+      <br><br>
       <ion-list>
         <ion-item menu-close ng-repeat="day in days" ng-href="#app/audioPlans/:{{day.id}}" ng-click="selectDay(day, $index)" 
         ng-class="{active: day == activeDay}">
@@ -24,7 +29,7 @@
         </ion-item>
       </ion-list>
       <br><br>
-      <img src="img/logo.png" style="width:100%;">
+      
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

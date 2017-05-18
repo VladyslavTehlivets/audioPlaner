@@ -1,10 +1,22 @@
 <ion-view>
   <ion-nav-title>{{activeDay.name}}</ion-nav-title>
   <ion-nav-buttons side="right" ng-show="true">
-        <button class="button button-icon button-clear ion-compose">
+        <button class="button button-icon button-clear ion-compose" ng-click="openAddPlan()">
         </button>
       </ion-nav-buttons>
   <ion-content>
+         <ion-list inset>
+           <ion-item style="margin-left: 5%;margin-right: 5%;" 
+            ng-repeat="task in activeDay.tasks|orderBy:'hour'">
+            <div class="row">
+              <div class="col col-75" 
+              style="text-align:left;"><h3>{{task.name}}</h3></div>
+              <div class="col" style="text-align:right;"><h3>{{task.hour}}<h3></div>
+            </div>
+            </ion-item>
+         </ion-list>
   </ion-content>
-  <ion-footer-bar class="bar-dark"></ion-footer-bar>
+  <ion-footer-bar class="bar-dark">
+      <button class="button button-outline button-stable pull-right" ng-click="clrActivePlans()">Clear All</button>
+  </ion-footer-bar>
 </ion-view>

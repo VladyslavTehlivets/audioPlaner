@@ -36,9 +36,13 @@ var planer = angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/audioPlans',
     views: {
       'menuContent': {
-        cache: false,
         templateUrl: 'templates/audioPlans.html',
         controller: 'planner'
+      },
+      'modal':{
+        templateUrl: 'templates/addPlan.html',
+        controller: 'planner',
+        filter: 'capitalize'
       }
     }
   })

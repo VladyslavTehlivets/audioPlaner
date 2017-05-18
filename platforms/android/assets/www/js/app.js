@@ -39,6 +39,11 @@ var planer = angular.module('starter', ['ionic', 'starter.controllers'])
         cache: false,
         templateUrl: 'templates/audioPlans.html',
         controller: 'planner'
+      },
+      'modal':{
+        templateUrl: 'templates/addPlan.html',
+        controller: 'planner',
+        filter: 'capitalize'
       }
     }
   })
