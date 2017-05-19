@@ -42,6 +42,7 @@ var planer = angular.module('starter', ['ionic', 'starter.controllers'])
       'modal':{
         templateUrl: 'templates/addPlan.html',
         controller: 'planner',
+        css: 'css/style.css',
         filter: 'capitalize'
       }
     }

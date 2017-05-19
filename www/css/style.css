@@ -1,1 +1,12 @@
 /* Empty. Add your own CSS if you like */
+.model{
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    bottom: 10%;
+    display: block;
+    width: 80%;
+    height: 50%;
+    border-radius: 25px;
+    border-color: black;
+}
