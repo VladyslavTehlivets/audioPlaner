@@ -38,6 +38,9 @@
         },
         "cordova-plugin-tts": {
             "PACKAGE_NAME": "com.ionicframework.audioweekplaner181777"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.audioweekplaner181777"
         }
     },
     "dependent_plugins": {

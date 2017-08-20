@@ -104,6 +104,14 @@ module.exports = [
         "clobbers": [
             "TTS"
         ]
+    },
+    {
+        "id": "cordova-plugin-datepicker.DatePicker",
+        "file": "plugins/cordova-plugin-datepicker/www/android/DatePicker.js",
+        "pluginId": "cordova-plugin-datepicker",
+        "clobbers": [
+            "datePicker"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -118,7 +126,8 @@ module.exports.metadata =
     "cordova-plugin-compat": "1.1.0",
     "org.apache.cordova.speech.speechrecognition": "0.1.2",
     "cordova-plugin-crosswalk-webview": "2.3.0",
-    "cordova-plugin-tts": "0.2.3"
+    "cordova-plugin-tts": "0.2.3",
+    "cordova-plugin-datepicker": "0.9.2"
 };
 // BOTTOM OF METADATA
 });

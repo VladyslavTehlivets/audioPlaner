@@ -6,58 +6,69 @@
 // 'starter.controllers' is found in controllers.js
 var planer = angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+  .run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+    });
+  })
+
+  .config(function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
+
+      .state('app', {
+        url: '/app',
+        abstract: true,
+        templateUrl: 'templates/menu.html',
+        controller: 'planner'
+      })
+
+      .state('app.audioPlans', {
+        url: '/audioPlans',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/audioPlans.html',
+            controller: 'planner'
+          },
+          'modal': {
+            templateUrl: 'templates/addPlan.html',
+            controller: 'planner',
+            css: 'css/style.css',
+            filter: 'capitalize',
+            filter: 'time'
+          }
+        }
+      })
+
+      .state('app.day', {
+        url: '/audioPlans/:dayId',
+        views: {
+          'menuContent': {
+            cache: false,
+            templateUrl: 'templates/audioPlans.html',
+            controller: 'planner'
+          }
+        }
+      })
+
+      .state('app.week', {
+        url: '/weekPlans',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/weekPlans.html',
+            controller: 'planner'
+          }
+        }
+      })
+
+    $urlRouterProvider.otherwise('/app/audioPlans');
   });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-
-    .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'planner'
-  })
-
-  .state('app.audioPlans', {
-    url: '/audioPlans',
-    views: {
-      'menuContent': {
-        cache: false,
-        templateUrl: 'templates/audioPlans.html',
-        controller: 'planner'
-      },
-      'modal':{
-        templateUrl: 'templates/addPlan.html',
-        controller: 'planner',
-        filter: 'capitalize'
-      }
-    }
-  })
-
-  .state('app.day',{
-    url: '/audioPlans/:dayId',
-    views: {
-      'menuContent':{
-        cache: false,
-        templateUrl: 'templates/audioPlans.html',
-        controller: 'planner'
-      }
-    }
-  })
-  
-  $urlRouterProvider.otherwise('/app/audioPlans');
-});

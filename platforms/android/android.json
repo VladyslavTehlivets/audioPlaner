@@ -59,6 +59,10 @@
                         {
                             "xml": "<preference name=\"android-minSdkVersion\" value=\"16\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"DatePickerPlugin\"><param name=\"android-package\" value=\"com.plugin.datepicker.DatePickerPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -127,6 +131,9 @@
             "PACKAGE_NAME": "com.ionicframework.audioweekplaner181777"
         },
         "cordova-plugin-tts": {
+            "PACKAGE_NAME": "com.ionicframework.audioweekplaner181777"
+        },
+        "cordova-plugin-datepicker": {
             "PACKAGE_NAME": "com.ionicframework.audioweekplaner181777"
         }
     },
@@ -236,6 +243,14 @@
             "clobbers": [
                 "TTS"
             ]
+        },
+        {
+            "id": "cordova-plugin-datepicker.DatePicker",
+            "file": "plugins/cordova-plugin-datepicker/www/android/DatePicker.js",
+            "pluginId": "cordova-plugin-datepicker",
+            "clobbers": [
+                "datePicker"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -248,6 +263,7 @@
         "cordova-plugin-compat": "1.1.0",
         "org.apache.cordova.speech.speechrecognition": "0.1.2",
         "cordova-plugin-crosswalk-webview": "2.3.0",
-        "cordova-plugin-tts": "0.2.3"
+        "cordova-plugin-tts": "0.2.3",
+        "cordova-plugin-datepicker": "0.9.2"
     }
 }

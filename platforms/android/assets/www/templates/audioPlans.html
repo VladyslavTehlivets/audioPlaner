@@ -1,22 +1,30 @@
-<ion-view>
+<ion-view style="background-image: url('img/background.png');">
   <ion-nav-title>{{activeDay.name}}</ion-nav-title>
   <ion-nav-buttons side="right" ng-show="true">
-        <button class="button button-icon button-clear ion-compose" ng-click="openAddPlan()">
-        </button>
-      </ion-nav-buttons>
+    <button class="button button-icon button-clear ion-compose" ng-click="openAddPlan()"></button>
+  </ion-nav-buttons>
+
   <ion-content>
-         <ion-list inset>
-           <ion-item style="margin-left: 5%;margin-right: 5%;" 
-            ng-repeat="task in activeDay.tasks|orderBy:'hour'">
-            <div class="row">
-              <div class="col col-75" 
-              style="text-align:left;"><h3>{{task.name}}</h3></div>
-              <div class="col" style="text-align:right;"><h3>{{task.hour}}<h3></div>
-            </div>
-            </ion-item>
-         </ion-list>
+
+    <ion-list inset show-delete="deleteShow">
+      <ion-item style="margin-right:5%;margin-left: 5%;margin-top:5px; border-radius : 15px;" ng-repeat="task in activeDay.tasks|orderBy:'hour'">
+
+        <ion-card>
+          <div class="item-divider" style="border-radius: 15px;"></div>
+          <div class="row">
+            <ion-delete-button class="ion-minus-circled" ng-show="deleteShow" ng-click="deleteTask(task.name)"></ion-delete-button>
+            <div class="col col-75" style="text-align:left;"><strong>{{task.name}}</strong></div>
+            <div class="col" style="text-align:right;"><strong>{{task.hour}}</strong></div>
+          </div>
+        </ion-card>
+
+      </ion-item>
+    </ion-list>
+
   </ion-content>
+
   <ion-footer-bar class="bar-dark">
-      <button class="button button-outline button-stable pull-right" ng-click="clrActivePlans()">Clear All</button>
+    <button ng-if="activeDay.tasks.length" class="button button-outline button-stable" ng-click="showDelete()">Delete one</button>
+    <button ng-if="activeDay.tasks.length" class="button button-outline button-stable pull-right" ng-click="clrActivePlans()">Clear All</button>
   </ion-footer-bar>
 </ion-view>

@@ -1,25 +1,24 @@
 <ion-modal-view class="model">
     <ion-header-bar>
-            <h1 class="title">Add Plan</h1>  
-            <button class="button button-clear button-positive" ng-click="closeAddPlan()">Cancel</button>
+        <h1 class="title">Add Plan</h1>
+        <button class="button button-clear button-positive" ng-click="closeAddPlan()">Cancel</button>
     </ion-header-bar>
     <ion-content style="text-align:center;">
-      <br>
-      <br>
-      <h2><span style="text-align:left;">{{recognizedText | capitalize}}</span> 
-      {{recognizedHour}}</h2>
-      <br>
-        <!--<form ng-if="recognizedText && recognizedHour" style="text-align: center;">
-            <input name="recognizedText" ng-value="recognizedText">
-            <input name="recognizedHour" ng-value="recognizedHour">
-        </form>-->
-      <button ng-if="recognizedText && recognizedHour" class="button button-calm" 
-      ng-click="submit()">Submit</button>
+        <br>
+        <div ng-init="checked = false">
+            <label><input type="checkbox" ng-model="checked" />Show hint</label>
+            <div class="content-area sample-show-hide" ng-show="checked">
+                <p>Click "Record text" button for recording your plan</p>
+                <p>Click "Record hour" button for recording time of plan</p>
+                1 2 3 4 = 12:34
+            </div>
+        </div>
+        <h2><span style="text-align:left;">{{recognizedText|capitalize}}</span> {{recognizedHour|time}}</h2>
+        <br>
+        <button ng-if="recognizedText && recognizedHour" class="button button-calm" ng-click="submit()">Submit</button>
     </ion-content>
-     <ion-footer-bar class="bar-stable">
-         <button class="button button-clear button-positive" 
-         ng-click="recordText()">Record text</button>
-         <button class="button button-clear button-positive" 
-         ng-click="recordHour()">Add Hour</button>
-     </ion-footer-bar>
+    <ion-footer-bar class="bar-stable">
+        <button class="button button-clear button-positive" ng-click="recordText()">Record text</button>
+        <button class="button button-clear button-positive" ng-click="recordHour()">Add Hour</button>
+    </ion-footer-bar>
 </ion-modal-view>

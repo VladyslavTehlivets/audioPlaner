@@ -18,16 +18,18 @@
     </ion-header-bar>
     <ion-content>
       <div margin-top margin-bottom>
-          <img src="img/logo.png" style="width:100%;">
+        <img src="img/logo.png" style="width:100%;">
       </div>
       <ion-list>
-        <ion-item menu-close ng-repeat="day in days" ng-href="#app/audioPlans/:{{day.id}}" ng-click="selectDay(day, $index)" 
-        ng-class="{active: day == activeDay}">
+
+        <ion-item menu-close ng-repeat="day in days" ng-href="#app/audioPlans/:{{day.id}}" ng-click="selectDay(day, $index)" ng-class="{active: day == activeDay}">
           {{day.name}}
         </ion-item>
+        <ion-item menu-close ng-href="#app/weekPlans" ng-click="selectWeek()" ng-class="{active: week.active}">Week</ion-item>
+        
       </ion-list>
       <br><br>
-      
+
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
