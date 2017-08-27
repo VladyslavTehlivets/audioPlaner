@@ -1,5 +1,21 @@
 angular.module('starter.controllers', [])
 
+    .service('plannerService', function (Days) {
+        this.removeOldDates = function () {
+            var today = new Date();
+            for (var i = 1; i < 8; i++) {
+                var activeTasks = Days.getActiveTasks(i);
+                var taskDate = null;
+                for (var j = activeTasks.length - 1; j >= 0; j--) {
+                    taskDate = new Date(activeTasks[j].date);
+                    if (taskDate < today) {
+                        Days.deleteTaskAtIndex(i, j);
+                    }
+                }
+            }
+        }
+    })
+
     .factory('Days', function () {
         return {
             all: function () {
@@ -60,7 +76,7 @@ angular.module('starter.controllers', [])
         }
     })
 
-    .controller('planner', function ($scope, $ionicModal, Days, $ionicSideMenuDelegate, $stateParams, $filter, ionicDatePicker) {
+    .controller('planner', function ($scope, $ionicModal, Days, $ionicSideMenuDelegate, $stateParams, $filter, ionicDatePicker, $ionicPopup) {
 
         var disableDays = [];
         $scope.makeDaysArray = function (without) {
@@ -78,20 +94,29 @@ angular.module('starter.controllers', [])
                 console.log('Return value from the datepicker popup is : ' + val, new Date(val));
             },
             mode: 'date',
-            from: new Date(), //Optional
-            inputDate: new Date(),      //Optional
-            mondayFirst: true,          //Optional
-            disableWeekdays: disableDays,      //Optional
-            closeOnSelect: false,       //Optional
+            from: new Date(),
+            inputDate: new Date(),
+            mondayFirst: true,
+            disableWeekdays: disableDays,
+            closeOnSelect: false,
             templateType: 'popup'
         };
 
-        $scope.days = Days.all();
+        var nextActiveDay = function (activeDay) {
+            var d = new Date(2017, 07, 28);
+            var today = d.getDay() + 1;
+            var plus = today > activeDay ? 7 - activeDay : activeDay - today;
+            var date = new Date(d.getFullYear(), d.getMonth(), d.getDate() + plus);
+            return date;
+        }
 
+        $scope.days = Days.all();
         $scope.activeDay = $scope.days[Days.getLastActiveIndex()];
+        $scope.nextDay = nextActiveDay($scope.activeDay.id);
         $scope.activeDay.tasks = Days.getActiveTasks($scope.activeDay.id);
         $scope.week = { active: false }
 
+        // console.log($scope.activeDay.tasks);
         $scope.AllTasks = [
             Array.from(Days.getActiveTasks(1)),
             Array.from(Days.getActiveTasks(2)),
@@ -105,18 +130,35 @@ angular.module('starter.controllers', [])
         $scope.selectDay = function (day, index) {
             $scope.activeDay = day;
             Days.setLastActiveIndex(index);
+            $scope.activeDay.tasks = Days.getActiveTasks($scope.activeDay.id);
+            $scope.activeDay.tasks.push({ name: "Test task", hour: "16:00", date: nextActiveDay($scope.activeDay.id) });
+            Days.saveActiveTasks($scope.activeDay.id, $scope.activeDay.tasks);    
             $scope.week.active = false;
+        }
+
+        var updateWeekTasks = function () {
+            $scope.AllTasks.splice(0, 7);
+            $scope.AllTasks = [
+                Array.from(Days.getActiveTasks(1)),
+                Array.from(Days.getActiveTasks(2)),
+                Array.from(Days.getActiveTasks(3)),
+                Array.from(Days.getActiveTasks(4)),
+                Array.from(Days.getActiveTasks(5)),
+                Array.from(Days.getActiveTasks(6)),
+                Array.from(Days.getActiveTasks(7)),
+            ];
         }
 
         $scope.selectWeek = function () {
             $scope.activeDay = null;
             $scope.week.active = true;
+            updateWeekTasks();
         }
 
         $scope.recognizedText = "";
         $scope.recognizedHour = "";
 
-        //recording part
+        //++ recording part
         $scope.recordText = function () {
             var recognition = new (webkitSpeechRecognition || SpeechRecognition);
             recognition.lang = 'pl-PL';
@@ -144,24 +186,30 @@ angular.module('starter.controllers', [])
             }
             recognition.start();
         };
+        //-----recording part end
 
         $scope.submit = function () {
             var capitalize = $filter('capitalize');
             var time = $filter('time');
-            $scope.activeDay.tasks.push({
-                name: capitalize($scope.recognizedText),
-                hour: time($scope.recognizedHour)
-            });
+
+            var name = capitalize($scope.recognizedText);
+            var hour = time($scope.recognizedHour);
+            var date = nextActiveDay();
+
+            addTasksToActiveDay(name, hour, date);
+
             $scope.closeAddPlan();
-            Days.saveActiveTasks($scope.activeDay.id, $scope.activeDay.tasks);
             $scope.$apply;
         };
 
-
-        $scope.deleteShow = false;
-        $scope.showDelete = function () {
-            $scope.deleteShow = !$scope.deleteShow;
-        }
+        var addTasksToActiveDay = function (taskName, taskHour, taskDate) {
+            $scope.activeDay.tasks.push({
+                name: taskName,
+                hour: taskHour,
+                date: date
+            });
+            Days.saveActiveTasks($scope.activeDay.id, $scope.activeDay.tasks);
+        };
 
         $scope.deleteTask = function (name) {
             for (var i = 0; i < $scope.activeDay.tasks.length; i++) {
@@ -173,10 +221,27 @@ angular.module('starter.controllers', [])
         }
 
         $scope.clrActivePlans = function () {
-            $scope.activeDay.tasks.splice(0, $scope.activeDay.tasks.length);
-            $scope.$apply;
-            Days.deleteAllActiveTasks($scope.activeDay.id);
+            $scope.showConfirm();
         }
+
+        $scope.showConfirm = function () {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Delete all tasks',
+                template: 'Are you sure you want to delete all tasks?',
+                cssClass: 'round'
+            });
+
+            confirmPopup.then(function (res) {
+                if (res) {
+                    console.log('You are sure');
+                    $scope.activeDay.tasks.splice(0, $scope.activeDay.tasks.length);
+                    $scope.$apply;
+                    Days.deleteAllActiveTasks($scope.activeDay.id);
+                } else {
+                    console.log('You are not sure');
+                }
+            });
+        };
 
         //work with model
         $ionicModal.fromTemplateUrl('templates/addPlan.html', {
@@ -187,9 +252,12 @@ angular.module('starter.controllers', [])
             $scope.modal = modal;
         });
 
-        $scope.openAddPlan = function () {
+        $scope.openDatePicker = function () {
             $scope.makeDaysArray($scope.activeDay.id - 1);
             ionicDatePicker.openDatePicker(ipObj1);
+        }
+
+        $scope.openAddPlan = function () {
             $scope.modal.show();
         };
 

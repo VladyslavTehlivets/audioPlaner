@@ -1,7 +1,7 @@
 <ion-modal-view class="model">
     <ion-header-bar>
         <h1 class="title">Add Plan</h1>
-        <button class="button button-clear button-positive" ng-click="closeAddPlan()">Cancel</button>
+        <button class="button icon-right ion-close-circled button-clear button-dark" ng-click="closeAddPlan()">Cancel</button>
     </ion-header-bar>
     <ion-content style="text-align:center;">
         <br>
@@ -15,10 +15,10 @@
         </div>
         <h2><span style="text-align:left;">{{recognizedText|capitalize}}</span> {{recognizedHour|time}}</h2>
         <br>
-        <button ng-if="recognizedText && recognizedHour" class="button button-calm" ng-click="submit()">Submit</button>
+        <button ng-if="recognizedText && recognizedHour" class="button button-dark" ng-click="submit()">Submit</button>
     </ion-content>
-    <ion-footer-bar class="bar-stable">
-        <button class="button button-clear button-positive" ng-click="recordText()">Record text</button>
-        <button class="button button-clear button-positive" ng-click="recordHour()">Add Hour</button>
+    <ion-footer-bar class="bar bar-stable">
+        <button class="button icon-right ion-mic-a button-clear button-dark" ng-click="recordText()">Record text</button>
+        <button class="button icon-left ion-mic-a button-clear button-dark" ng-click="recordHour()">Add Hour</button>
     </ion-footer-bar>
 </ion-modal-view>

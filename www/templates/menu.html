@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-dark">
+    <ion-nav-bar class="bar bar-dark large-bar">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -13,8 +13,8 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-dark">
-      <h1 class="title">Days</h1>
+    <ion-header-bar class="bar bar-dark large-bar">
+      <h1 class="title" class="center">Days</h1>
     </ion-header-bar>
     <ion-content>
       <div margin-top margin-bottom>
@@ -26,7 +26,7 @@
           {{day.name}}
         </ion-item>
         <ion-item menu-close ng-href="#app/weekPlans" ng-click="selectWeek()" ng-class="{active: week.active}">Week</ion-item>
-        
+
       </ion-list>
       <br><br>
 

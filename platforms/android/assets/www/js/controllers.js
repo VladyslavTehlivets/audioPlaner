@@ -60,29 +60,33 @@ angular.module('starter.controllers', [])
         }
     })
 
-    .controller('planner', function ($scope, $ionicModal, Days, $ionicSideMenuDelegate, $stateParams, $filter) {
+    .controller('planner', function ($scope, $ionicModal, Days, $ionicSideMenuDelegate, $stateParams, $filter, ionicDatePicker,$ionicPopup) {
+
+        var disableDays = [];
+        $scope.makeDaysArray = function (without) {
+            disableDays.splice(0, 6);
+            for (var i = 0; i <= 6; i++) {
+                if (i === without) {
+                } else {
+                    disableDays.push(i);
+                }
+            }
+        }
+
+        var ipObj1 = {
+            callback: function (val) {  //Mandatory
+                console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+            },
+            mode: 'date',
+            from: new Date(), 
+            inputDate: new Date(),      
+            mondayFirst: true,          
+            disableWeekdays: disableDays,      
+            closeOnSelect: false,       
+            templateType: 'popup'
+        };
 
         $scope.days = Days.all();
-
-        // var options = {
-        //     date: new Date(),
-        //     mode: 'date', // or 'time'
-        //     minDate: new Date() - 10000,
-        //     allowOldDates: true,
-        //     allowFutureDates: false,
-        //     doneButtonLabel: 'DONE',
-        //     doneButtonColor: '#F2F3F4',
-        //     cancelButtonLabel: 'CANCEL',
-        //     cancelButtonColor: '#000000'
-        // };
-
-        // document.addEventListener("deviceready", function () {
-
-        //     $cordovaDatePicker.show(options).then(function (date) {
-        //         alert(date);
-        //     });
-
-        // }, false);
 
         $scope.activeDay = $scope.days[Days.getLastActiveIndex()];
         $scope.activeDay.tasks = Days.getActiveTasks($scope.activeDay.id);
@@ -169,10 +173,27 @@ angular.module('starter.controllers', [])
         }
 
         $scope.clrActivePlans = function () {
-            $scope.activeDay.tasks.splice(0, $scope.activeDay.tasks.length);
-            $scope.$apply;
-            Days.deleteAllActiveTasks($scope.activeDay.id);
+            $scope.showConfirm();
         }
+
+        $scope.showConfirm = function() {
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Delete all tasks',
+              template: 'Are you sure you want to delete all tasks?',
+              cssClass: 'round'
+            });
+         
+            confirmPopup.then(function(res) {
+              if(res) {
+                console.log('You are sure');
+                $scope.activeDay.tasks.splice(0, $scope.activeDay.tasks.length);
+                $scope.$apply;
+                Days.deleteAllActiveTasks($scope.activeDay.id);
+              } else {
+                console.log('You are not sure');
+              }
+            });
+          };
 
         //work with model
         $ionicModal.fromTemplateUrl('templates/addPlan.html', {
@@ -182,6 +203,11 @@ angular.module('starter.controllers', [])
         }).then(function (modal) {
             $scope.modal = modal;
         });
+
+        $scope.openDatePicker = function(){
+            $scope.makeDaysArray($scope.activeDay.id - 1);
+            ionicDatePicker.openDatePicker(ipObj1);
+        }
 
         $scope.openAddPlan = function () {
             $scope.modal.show();

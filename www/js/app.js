@@ -1,18 +1,17 @@
 var planer = angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker'])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, plannerService) {
     $ionicPlatform.ready(function () {
-
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
 
       }
       if (window.StatusBar) {
-
         StatusBar.styleDefault();
       }
     });
+    plannerService.removeOldDates();
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -22,6 +21,7 @@ var planer = angular.module('starter', ['ionic', 'starter.controllers','ionic-da
         url: '/app',
         abstract: true,
         templateUrl: 'templates/menu.html',
+        css: 'css/style.css',                    
         controller: 'planner'
       })
 
@@ -30,6 +30,7 @@ var planer = angular.module('starter', ['ionic', 'starter.controllers','ionic-da
         views: {
           'menuContent': {
             templateUrl: 'templates/audioPlans.html',
+            css: 'css/style.css',            
             controller: 'planner'
           },
           'modal': {

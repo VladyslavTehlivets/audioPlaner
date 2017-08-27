@@ -3,3 +3,19 @@
     height: 50%;
     border-radius: 20px;
 }
+
+.large-bar{
+    height: 4em;
+    margin-bottom: 3em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.center{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.round{
+    border-radius: 15px;
+}
