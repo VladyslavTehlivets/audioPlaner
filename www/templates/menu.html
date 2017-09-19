@@ -1,32 +1,36 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus enable-menu-with-back-views="true">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar bar-dark large-bar">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-
+    <ion-nav-bar class="bar toolbar center">
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        <button class="button button-light button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
+    <ion-header-bar class="bar-subheader toolbar">
+      <ion-title>
+        <h4 ng-if="activeDay.name" class="main-text text-white center">{{activeDay.name}}</h4>
+        <h4 ng-if="!activeDay.name" class="main-text text-white center">Week</h4>
+      </ion-title>
+    </ion-header-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar bar-dark large-bar">
-      <h1 class="title" class="center">Days</h1>
-    </ion-header-bar>
-    <ion-content>
-      <div margin-top margin-bottom>
-        <img src="img/logo.png" style="width:100%;">
-      </div>
-      <ion-list>
 
-        <ion-item menu-close ng-repeat="day in days" ng-href="#app/audioPlans/:{{day.id}}" ng-click="selectDay(day, $index)" ng-class="{active: day == activeDay}">
+  <ion-side-menu side="left">
+    <ion-content class="menu-border">
+      <div margin-top margin-bottom>
+        <img src="img/logo.png" style="width:100%;" />
+        <h3 class="main-text center-text">Audio Planner</h3>
+      </div>
+      <ion-list inset class="round">
+
+        <div class="item item-divider"></div>
+        <ion-item class="main-text" menu-close ng-repeat="day in days" ng-href="#app/audioPlans/:{{day.id}}" ng-click="selectDay(day, $index)"
+          ng-class="{active: day == activeDay}">
           {{day.name}}
         </ion-item>
-        <ion-item menu-close ng-href="#app/weekPlans" ng-click="selectWeek()" ng-class="{active: week.active}">Week</ion-item>
-
+        <div class="item item-divider"></div>
+        <ion-item class="main-text" menu-close ng-href="#app/weekPlans" ng-click="selectWeek()" ng-class="{active: week.active}">Week</ion-item>
       </ion-list>
       <br><br>
 

@@ -1,29 +1,28 @@
-<ion-view style="background-image: url('img/background.png');">
-  <ion-nav-title>Week</ion-nav-title>
-  <ion-content>
+<ion-view class="toolbar">
+  <ion-content class="content">
 
     <ion-list inset>
+      <ion-item class="list-item" ng-if="AllTasks[i].length > 0" ng-repeat="i in [0,1,2,3,4,5,6]">
 
-      <ion-item ng-if="AllTasks[i].length > 0" style="margin-top:5px; border-radius : 15px;margin-left: 5%;margin-right: 5%; text-align:center;"
-        ng-repeat="i in [0,1,2,3,4,5,6]">
-        <ion-card>
+        <strong class="main-text text-white">{{days[i].name}}</strong>
 
-          <div class="item-divider" style="border-radius: 15px;"><strong>{{days[i].name}}</strong></div>
-          <ion-list inset>
-            <ion-item style="border-radius:15px;margin-top:5px;margin-left: 2%;margin-right: 2%;" ng-repeat="task in AllTasks[i]">
-              <div class="row">
-                <div class="col col-75" style="text-align:left;"><strong>{{task.name}}</strong></div>
-                <div class="col" style="text-align:right;"><strong>{{task.hour}}</strong></div>
+        <ion-list inset>
+
+          <ion-item class="list-item" ng-repeat="task in AllTasks[i]">
+            <div class="row">
+              <div class="col col-50 text-left"><strong class="main-text">{{task.name}}</strong></div>
+              <div class="col col-50 right-text main-text"><strong>{{task.hour}}</strong>
+                <br>{{task.date|date:'yyyy-MM-dd'}}
               </div>
+            </div>
           </ion-item>
 
-          </ion-list>
-        </ion-card>
+        </ion-list>
       </ion-item>
 
     </ion-list>
   </ion-content>
 
-  <ion-footer-bar class="bar-dark">
+  <ion-footer-bar class="bar  toolbar">
   </ion-footer-bar>
 </ion-view>

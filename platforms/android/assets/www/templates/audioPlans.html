@@ -1,33 +1,33 @@
-<ion-view style="background-image: url('img/background.png');">
-  <ion-nav-title class="center">{{activeDay.name}}</ion-nav-title>
-  <ion-nav-buttons side="right" ng-show="true" class="center">
-    <button class="button button-icon button-clear ion-compose" ng-click="openAddPlan()"></button>
+<ion-view>
+  <ion-nav-buttons side="right" ng-show="true">
+    <button class="button button-icon button-light button-clear ion-ios-plus-outline" ng-click="openAddPlan()"></button>
   </ion-nav-buttons>
 
-  <ion-content>
-    <ion-list inset can-swipe="true">
-      <ion-item style="margin-top:5px; border-radius : 15px;margin-left: 5%;margin-right: 5%; text-align:center;" ng-repeat="task in activeDay.tasks|orderBy:'hour'">
+  <ion-content class="content">
+    <ion-list>
 
-        <ion-card>
-          <div class="item item-divider" style="border-radius: 15px;"></div>
-          <div class="row">
-            <div class="col col-75" style="text-align:left;">
+      <ion-item class="list-item" ng-repeat="task in activeDay.tasks | orderBy:'hour'">
+
+        <div class="row">
+          <div class="col col-50 left-text main-text">
               <strong>{{task.name}}</strong>
-            </div>
-            <div class="col" style="text-align:right;">
-              <strong>{{task.hour}}</strong>
-              <br>
-              <button class="button button-icon ion-calendar" ng-click="openDatePicker()"></button>
-            </div>
           </div>
-        </ion-card>
-
-        <ion-option-button class="button-assertive" ng-click="deleteTask(task.name)">Delete</ion-option-button>
+          <div class="col col-50 right-text main-text">
+            <strong>{{task.hour}}</strong>
+            <br>
+            <button class="button button-icon ion-calendar main-text text-white" ng-click="openDatePicker()"> {{task.date|date:'yyyy-MM-dd'}}</button>
+          </div>
+        </div>
+        <div ng-if="editing" class="row">
+          <button class="button button-full button-assertive center" ng-click="deleteTask(task.name)">Delete</button>
+        </div>
       </ion-item>
     </ion-list>
+
   </ion-content>
 
-  <ion-footer-bar class="bar-dark">
-    <button ng-if="activeDay.tasks.length" class="button button-icon ion-trash-b button-clear pull-right" ng-click="clrActivePlans()"></button>
+  <ion-footer-bar class="bar toolbar">
+    <button ng-if="activeDay.tasks.length" class="button button-light button-icon ion-compose button-clear pull-left" ng-click="editingNegate()"></button>
+    <button ng-if="activeDay.tasks.length" class="button button-light button-icon ion-trash-b button-clear pull-right" ng-click="clrActivePlans()"></button>
   </ion-footer-bar>
 </ion-view>

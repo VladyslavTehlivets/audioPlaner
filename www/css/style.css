@@ -1,7 +1,6 @@
 /* Empty. Add your own CSS if you like */
 .model{
     height: 50%;
-    border-radius: 20px;
 }
 
 .large-bar{
@@ -12,10 +11,95 @@
 }
 
 .center{
+    align-content: center;
     text-align: center;
-    vertical-align: middle;
 }
 
 .round{
-    border-radius: 15px;
+    margin-top:5px; 
+    border-radius : 15px;
+    margin-left: 2%;
+    margin-right: 2%; 
+    text-align:center;
+    align-content: center;
 }
+
+.margin{
+    margin-top: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.round-divider{
+    border-radius : 10px;
+    align-content: center;
+}
+
+.p .h1{
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+}
+
+.main-text{
+    text-shadow: 4px 3px 5px #989595;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+}
+
+.left-text{
+    text-align: left;
+}
+
+.right-text{
+    text-align: right;
+}
+
+.center-text{
+    text-align: center;
+}
+
+
+.menu-border{
+    background: linear-gradient(41deg, rgb(122, 199, 189) 0%, rgb(1, 84, 92) 100%);     
+}
+
+.text-white{
+    color: white;
+}
+
+.gradient{
+    background: #0A0505; 
+    background: radial-gradient(#52866C, #2D8982, #19746A); 
+}
+
+.main-background{
+    background: linear-gradient(45deg, rgb(33, 104, 115) 0%, rgb(2, 112, 86) 100%);     
+}
+
+.toolbar{
+    background: #006064;
+}
+
+.content{
+    background: linear-gradient(41deg, rgb(122, 199, 189) 0%, rgb(1, 84, 92) 100%);     
+}
+
+.menu-content.menu-animated {
+    transition: transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.transparent{
+    background:rgba(0,0,0,0.5);
+}
+
+.list-item{
+    border:none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+    color: white;
+    background:rgba(0,0,0,0.5);
+}
+
+
