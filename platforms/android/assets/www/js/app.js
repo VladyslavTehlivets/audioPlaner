@@ -60,7 +60,8 @@ planer.config(function ($stateProvider, $urlRouterProvider) {
         'menuContent': {
           cache: false,          
           templateUrl: 'templates/weekPlans.html',
-          controller: 'weekCtrl'
+          controller: 'weekCtrl',
+          filter: 'next-week'
         }
       }
     })
