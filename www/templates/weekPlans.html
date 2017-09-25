@@ -2,13 +2,13 @@
   <ion-content class="content">
 
     <ion-list inset>
-      <ion-item class="list-item" ng-if="AllTasks[i].length > 0" ng-repeat="i in [0,1,2,3,4,5,6]">
+      <ion-item class="list-item" ng-if="checkNextWeek(AllTasks[i])" ng-repeat="i in [0,1,2,3,4,5,6]">
 
         <strong class="main-text text-white">{{days[i].name}}</strong>
 
         <ion-list inset>
 
-          <ion-item class="list-item" ng-repeat="task in AllTasks[i]">
+          <ion-item class="list-item" ng-repeat="task in AllTasks[i] | nextWeek:week">
             <div class="row">
               <div class="col col-50 text-left"><strong class="main-text">{{task.name}}</strong></div>
               <div class="col col-50 right-text main-text"><strong>{{task.hour}}</strong>
@@ -23,6 +23,8 @@
     </ion-list>
   </ion-content>
 
-  <ion-footer-bar class="bar  toolbar">
+  <ion-footer-bar class="bar toolbar">
+      <button ng-if="week > 0" class="button button-light button-icon ion-ios-arrow-back button-clear pull-left" ng-click="previousWeek()"></button>
+      <button class="button button-light button-icon ion-ios-arrow-forward button-clear pull-right" ng-click="nextWeek()"></button>
   </ion-footer-bar>
 </ion-view>
