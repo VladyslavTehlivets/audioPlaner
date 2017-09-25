@@ -5,26 +5,33 @@
     </ion-header-bar>
     <ion-content class="center-text center">
         <br>
-        <div ng-init="checked = false" class="main-text">
+        <div class="main-text">
             <label class="toggle toggle-dark">
                 <input type="checkbox" ng-model="checked">
                 <div class="track">
                     <div class="handle"></div>
                 </div>
             </label>
-            <div class="content-area sample-show-hide" ng-show="checked">
-                <p>Click "Record text" button for recording your plan</p>
-                <p>Click "Record hour" button for recording time of plan</p>
-                <p>1 2 3 4 = 12:34</p>
+        </div>
+        <div class="content-area sample-show-hide main-text" ng-show="checked">
+            <p>Click "Record text" button for recording your plan</p>
+            <p>Click "Record hour" button for recording time of plan</p>
+            <p>1 2 3 4 = 12:34</p>
+        </div>
+        <form name="myForm" ng-submit="submit(recorded)">
+            <div class="list padding">
+                <label class="item item-input">
+                        <input name="name" type="text" placeholder="Record text or enter" ng-model="recorded.taskName" required/>
+                    </label>
+                <label class="item item-input">
+                        <input name="hour" type="text" placeholder="Record hour or enter" ng-model="recorded.taskHour" required/>
+                    </label>
             </div>
+            <div class="padding">
+                <button type="submit" ng-disabled="myForm.name.$error.required || myForm.hour.$error.required" class="button button-block transparent text-white">Create Task</button>
+            </div>
+        </form>
         </div>
-        <div>
-            <input type="text" ng-model="recognizedText"/>
-            <input type="text" ng-model="recognizedHour"/>
-        </div>
-        <h2><span class="left-text">{{recognizedText|capitalize}}</span> {{recognizedHour|time}}</h2>
-        <br>
-        <button ng-if="recognizedText && recognizedHour" class="button transparent text-white" ng-click="submit()">Submit</button>
     </ion-content>
     <ion-footer-bar class="bar bar-stable">
         <button class="button icon-right ion-mic-a button-clear button-dark main-text" ng-click="recordText()">Record text  </button>

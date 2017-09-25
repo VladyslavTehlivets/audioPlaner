@@ -72,8 +72,9 @@ controllers.controller('planner', function ($scope, $rootScope, $ionicModal, Day
         $rootScope.$emit("updateWeekTasks", {});
     }
 
-    $scope.recognizedText = "";
-    $scope.recognizedHour = "";
+    $scope.recorded = {
+        taskName: "", taskHour: ""
+    };
 
     //++ recording part
     $scope.recordText = function () {
@@ -83,7 +84,7 @@ controllers.controller('planner', function ($scope, $rootScope, $ionicModal, Day
 
         recognition.onresult = function (event) {
             if (event.results.length > 0) {
-                $scope.recognizedText = event.results[0][0].transcript;
+                $scope.recorded.taskName = event.results[0][0].transcript;
                 $scope.recognitionStart = false;
                 $scope.$apply();
             }
@@ -98,8 +99,7 @@ controllers.controller('planner', function ($scope, $rootScope, $ionicModal, Day
 
         recognition.onresult = function (event) {
             if (event.results.length > 0) {
-                $scope.recognizedHour = event.results[0][0].transcript;
-                $scope.recognitionStart = false;
+                $scope.recorded.taskHour = event.results[0][0].transcript;
                 $scope.$apply();
             }
         }
@@ -107,13 +107,16 @@ controllers.controller('planner', function ($scope, $rootScope, $ionicModal, Day
     };
     //-----recording part end
 
-    $scope.submit = function () {
+    $scope.submit = function (recorded) {
         var capitalize = $filter('capitalize');
         var time = $filter('time');
 
-        var name = capitalize($scope.recognizedText);
-        var hour = time($scope.recognizedHour);
+        var name = capitalize(recorded.taskName);
+        var hour = time(recorded.taskHour);
         var date = plannerService.nextActiveDay($scope.activeDay.id);
+
+        recorded.taskName = "";
+        recorded.taskHour = "";
 
         addTaskToActiveDay(name, hour, date);
         $scope.closeAddPlan();
@@ -135,7 +138,7 @@ controllers.controller('planner', function ($scope, $rootScope, $ionicModal, Day
         $scope.activeDay.tasks = dataManagmentService.getActiveTasks($scope.activeDay.id);
     }
 
-    var deleteAllTasks = function() {
+    var deleteAllTasks = function () {
         dataManagmentService.deleteAllTasks($scope.activeDay.id);
         updateTasks();
     }
