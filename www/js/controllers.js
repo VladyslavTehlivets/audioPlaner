@@ -110,9 +110,11 @@ controllers.controller('planner', function ($scope, $rootScope, $ionicModal, Day
     $scope.submit = function (recorded) {
         var capitalize = $filter('capitalize');
         var time = $filter('time');
+        var dateFilter = $filter('date');
 
         var name = capitalize(recorded.taskName);
         var hour = time(recorded.taskHour);
+        // var date = dateFilter(plannerService.nextActiveDay($scope.activeDay.id),'short');
         var date = plannerService.nextActiveDay($scope.activeDay.id);
 
         recorded.taskName = "";

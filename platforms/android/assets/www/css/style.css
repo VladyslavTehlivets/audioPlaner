@@ -82,6 +82,7 @@
 
 .content{
     background: linear-gradient(41deg, rgb(122, 199, 189) 0%, rgb(1, 84, 92) 100%);     
+    background: rgb(41, 155, 163);
 }
 
 .menu-content.menu-animated {

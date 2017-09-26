@@ -23,12 +23,16 @@ filters.filter('nextWeek', function (plannerService) {
             taskDate = new Date(element.date);
             if (i === 0) {
                 today = new Date();
-                if(today.getDay() === nextWeekStart.getDay()){
-                    nextWeekStart = new Date(nextWeekStart.getFullYear(), nextWeekStart.getMonth(), nextWeekStart.getDate() + 7);                    
+                if (today.getDay() === nextWeekStart.getDay()) {
+                    nextWeekStart = new Date(nextWeekStart.getFullYear(), nextWeekStart.getMonth(), nextWeekStart.getDate() + 7);
                 }
-                if (taskDate < nextWeekStart){
+                if (taskDate < nextWeekStart) {
                     filtered.push(element);
                 }
+            } else if (i === 1){
+                if(taskDate >= nextWeekStart && taskDate < nextWeekInc){
+                    filtered.push(element);
+                }    
             } else {
                 if (taskDate >= nextWeekInc && taskDate < nextWeekEnd) {
                     filtered.push(element);
